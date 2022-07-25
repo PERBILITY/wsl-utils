@@ -10,12 +10,12 @@ You can change the default behaviour by editing the variables on the top of the 
 For installation see the respective instructions for your IDE below.
 ### WebStorm
 - Run the following Command in WSL:<br>
-`wget -P ~/bin https://raw.githubusercontent.com/PERBILITY/wsl-utils/main/webstormd && chmod +x ~/bin/webstormd`
+`wget -O ~/bin/webstormd https://raw.githubusercontent.com/PERBILITY/wsl-utils/main/webstormd && chmod +x ~/bin/webstormd`
 - In Windows create a new shortcut with target `C:\Windows\System32\wsl.exe bash -li webstormd`
 
 ### PhpStorm
 - Run the following Command in WSL:<br>
-`wget -P ~/bin https://raw.githubusercontent.com/PERBILITY/wsl-utils/main/phpstormd && chmod +x ~/bin/phpstormd`
+`wget -O ~/bin/phpstormd https://raw.githubusercontent.com/PERBILITY/wsl-utils/main/phpstormd && chmod +x ~/bin/phpstormd`
 - In Windows create a new shortcut with target `C:\Windows\System32\wsl.exe bash -li phpstormd`
 
 
