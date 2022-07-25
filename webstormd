@@ -1,0 +1,38 @@
+ #!/bin/bash
+ set +o history # disable bash history for the following commands
+
+ENABLE_LOGGING=true # valid options true/false
+
+# define logfile names, location and max age
+# only needed if ENABLE_LOGGING is true
+DATE_TIME=$(date +"%F_%T")
+LOG_MAX_AGE=+3 # +3 means files will be deleted if they are 4 days or older; see 'man find' for explanation
+LOG_DIRECTORY=~/logs/WebStorm
+STDOUT_LOGFILE=$LOG_DIRECTORY"/stdout_$DATE_TIME.log"
+ERROR_LOGFILE=$LOG_DIRECTORY"/error_$DATE_TIME.log"
+
+
+# if no logging, just start phpstorm
+if [ ! "$ENABLE_LOGGING" = true ]; then
+  (
+    nohup webstorm 0<&- 1>/dev/null 2>&1 &
+    sleep 0
+  )
+  exit;
+fi
+
+# ensure log directory and files exist
+[ ! -d $LOG_DIRECTORY ] && mkdir -p $LOG_DIRECTORY
+[ ! -f $STDOUT_LOGFILE ] && touch $STDOUT_LOGFILE
+[ ! -f $ERROR_LOGFILE ] && touch $ERROR_LOGFILE
+
+# start phpstorm
+(
+  nohup webstorm 0<&- 1>$STDOUT_LOGFILE 2>$ERROR_LOGFILE &
+  sleep 0
+)
+
+# delete old logs
+find $LOG_DIRECTORY -type f -mtime $LOG_MAX_AGE -name '*.log' -execdir rm -- '{}' +
+
+set -o history   # reenable bash history (only has effect if this script is called manually via cli)
